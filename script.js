@@ -488,19 +488,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuClose = document.getElementById('mobile-menu-close')
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link')
     
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active')
-    })
-    
-    mobileMenuClose.addEventListener('click', () => {
-        mobileMenu.classList.remove('active')
-    })
-    
+    function toggleMobileMenu() {
+      if (mobileMenu.classList.contains('open')) {
+        mobileMenu.classList.remove('open')
+        mobileMenu.style.display = 'none'
+      } else {
+        mobileMenu.classList.add('open')
+        mobileMenu.style.display = 'flex'
+      }
+    }
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open')
+      mobileMenu.style.display = 'none'
+    }
+
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu)
+    mobileMenuClose.addEventListener('click', closeMobileMenu)
     mobileMenuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active')
-        })
+      link.addEventListener('click', closeMobileMenu)
     })
+    
+    // Hide menu by default
+    closeMobileMenu()
     
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -690,8 +699,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Keyboard navigation support
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active')
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+            closeMobileMenu()
         }
     })
     

@@ -975,12 +975,10 @@ body.particle-interactive {
 
 /* Mobile Menu Styles */
 .mobile-menu {
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
+  display: none;
 }
-
 .mobile-menu.open {
-  transform: translateX(0);
+  display: flex;
 }
 
 /* Loading Animation */

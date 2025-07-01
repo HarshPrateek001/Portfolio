@@ -88,7 +88,3 @@ build/
 # Exclude .qodo directory if it contains temporary files
 .qodo/
 
-# Portfolio sensitive files (do not publish to GitHub)
-Resume__Harsh.pdf
-Profile Pic.jpg
-p2.jpg 
