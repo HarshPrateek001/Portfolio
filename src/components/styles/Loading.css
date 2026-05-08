@@ -60,6 +60,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  will-change: transform, min-width, min-height;
 }
 
 .loading-clicked {
@@ -409,5 +410,28 @@
 
   .loader-title {
     font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .loading-marquee {
+    font-size: 28px !important;
+  }
+
+  .loading-wrap {
+    --Lsize: 110px !important;
+  }
+
+  .loading-button {
+    padding: 12px 35px !important;
+    font-size: 14px !important;
+  }
+
+  .loading-container {
+    left: 35px !important;
+  }
+
+  .loaderGame-container {
+    transform: scale(0.3) !important;
   }
 }
