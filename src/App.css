@@ -26,3 +26,9 @@
     max-width: var(--cWidth);
   }
 }
+@media only screen and (max-width: 600px) {
+  .section-container {
+    width: 100%;
+    max-width: calc(100% - 20px);
+  }
+}

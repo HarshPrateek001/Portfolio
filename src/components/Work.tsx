@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, TouchEvent } from "react";
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
@@ -37,6 +37,8 @@ const projects = [
 const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const goToSlide = useCallback(
     (index: number) => {
@@ -60,6 +62,25 @@ const Work = () => {
     goToSlide(newIndex);
   }, [currentIndex, goToSlide]);
 
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        goToNext();
+      } else {
+        goToPrev();
+      }
+    }
+  };
+
   return (
     <div className="work-section" id="work">
       <div className="work-container section-container">
@@ -68,7 +89,7 @@ const Work = () => {
         </h2>
 
         <div className="carousel-wrapper">
-          {/* Navigation Arrows */}
+          {/* Navigation Arrows (hidden on mobile via CSS) */}
           <button
             className="carousel-arrow carousel-arrow-left"
             onClick={goToPrev}
@@ -86,8 +107,13 @@ const Work = () => {
             <MdArrowForward />
           </button>
 
-          {/* Slides */}
-          <div className="carousel-track-container">
+          {/* Slides with swipe support */}
+          <div
+            className="carousel-track-container"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div
               className="carousel-track"
               style={{
@@ -126,18 +152,36 @@ const Work = () => {
             </div>
           </div>
 
-          {/* Dot Indicators */}
-          <div className="carousel-dots">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
-                  }`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to project ${index + 1}`}
-                data-cursor="disable"
-              />
-            ))}
+          {/* Dot Indicators with inline mobile arrows */}
+          <div className="carousel-nav-mobile">
+            <button
+              className="carousel-arrow-inline"
+              onClick={goToPrev}
+              aria-label="Previous project"
+              data-cursor="disable"
+            >
+              <MdArrowBack />
+            </button>
+            <div className="carousel-dots">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
+                    }`}
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to project ${index + 1}`}
+                  data-cursor="disable"
+                />
+              ))}
+            </div>
+            <button
+              className="carousel-arrow-inline"
+              onClick={goToNext}
+              aria-label="Next project"
+              data-cursor="disable"
+            >
+              <MdArrowForward />
+            </button>
           </div>
         </div>
       </div>

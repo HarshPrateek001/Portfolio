@@ -194,6 +194,38 @@
   box-shadow: 0 0 8px rgba(94, 234, 212, 0.4);
 }
 
+/* ── Mobile Navigation Row ── */
+.carousel-nav-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 35px;
+}
+
+.carousel-arrow-inline {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #eae5ec;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.carousel-arrow-inline:hover {
+  background: rgba(94, 234, 212, 0.15);
+  border-color: var(--accentColor);
+  color: var(--accentColor);
+}
+
 /* ── Work Image (reused) ── */
 .work-image {
   display: flex;
@@ -364,14 +396,14 @@
   .carousel-content {
     flex-direction: column;
     gap: 20px;
-    padding: 0 10px;
+    padding: 0 5px;
   }
 
   /* Let info section take full width */
   .carousel-info {
     flex: 1 1 auto;
     width: 100%;
-    gap: 15px;
+    gap: 12px;
   }
 
   .carousel-image-wrapper {
@@ -403,24 +435,9 @@
     padding: 20px 0;
   }
 
-  /* Move arrows inside the track, position at the image area */
+  /* Hide floating arrows on mobile — they overlap image */
   .carousel-arrow {
-    position: absolute;
-    top: auto;
-    bottom: 80px;
-    transform: none;
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-    z-index: 10;
-  }
-
-  .carousel-arrow-left {
-    left: 5px;
-  }
-
-  .carousel-arrow-right {
-    right: 5px;
+    display: none;
   }
 
   /* Image sizing for mobile */
@@ -432,13 +449,23 @@
   }
 
   .carousel-dots {
-    margin-top: 20px;
+    margin-top: 0;
     gap: 8px;
   }
 
   .carousel-dot {
     width: 8px;
     height: 8px;
+  }
+
+  /* Show inline arrows on mobile */
+  .carousel-arrow-inline {
+    display: flex;
+  }
+
+  .carousel-nav-mobile {
+    margin-top: 20px;
+    gap: 12px;
   }
 
   .work-link {
